@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .quiz-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      text-align: center;
+    }
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .options {
+      list-style-type: none;
+      padding: 0;
+    }
+    .options li {
+      margin: 10px 0;
+    }
+    .options button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #0056b3;
+    }
+    .score-container {
+      display: none;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <div class="question" id="question">Question text</div>
+      <ul class="options" id="options">
+        <!-- Options will be dynamically inserted here -->
+      </ul>
+    </div>
+    <div class="score-container" id="score-container">
+      Your Score: <span id="score"></span> / <span id="total"></span>
+    </div>
+  </div>
+
+  <script>
+    // Quiz questions
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        options: ["Paris", "London", "Berlin", "Madrid"],
+        correct: "Paris"
+      },
+      {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Saturn"],
+        correct: "Mars"
+      },
+      {
+        question: "Who wrote 'Romeo and Juliet'?",
+        options: ["William Shakespeare", "Mark Twain", "Jane Austen", "Charles Dickens"],
+        correct: "William Shakespeare"
+      },
+      {
+        question: "What is 5 + 3?",
+        options: ["5", "8", "10", "7"],
+        correct: "8"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function showQuestion() {
+      const questionElement = document.getElementById("question");
+      const optionsElement = document.getElementById("options");
+      const currentQuestion = questions[currentQuestionIndex];
+
+      questionElement.textContent = currentQuestion.question;
+      optionsElement.innerHTML = "";
+
+      currentQuestion.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => checkAnswer(option);
+        optionsElement.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedOption) {
+      const currentQuestion = questions[currentQuestionIndex];
+      if (selectedOption === currentQuestion.correct) {
+        score++;
+      }
+
+      currentQuestionIndex++;
+
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }
+
+    function showScore() {
+      const quizElement = document.getElementById("quiz");
+      const scoreContainer = document.getElementById("score-container");
+      const scoreElement = document.getElementById("score");
+      const totalElement = document.getElementById("total");
+
+      quizElement.style.display = "none";
+      scoreContainer.style.display = "block";
+
+      scoreElement.textContent = score;
+      totalElement.textContent = questions.length;
+    }
+
+    // Start the quiz
+    showQuestion();
+  </script>
+</body>
+</html>ssss
